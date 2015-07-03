@@ -8,4 +8,4 @@ header('Content-Type: application/x-gzip');
 header(sprintf("Content-Length: %s", strlen($data)));
 header(sprintf("Content-Disposition: attachment; filename=\"%s.jws\"", $ws->_title));
 echo $data;
-?>
+

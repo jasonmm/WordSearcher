@@ -15,4 +15,4 @@ require_once('create_wordsearch_complete.tpl.html');
 
 require_once('html_bottom.tpl.html');
 
-?>
+
