@@ -4,6 +4,9 @@
  * Copyright (C) 2007-2015
  */
 
+use Jasonmm\WordSearch\WordSearch;
+
+require_once 'vendor/autoload.php';
 require_once('classes.inc.php');
 
 $page_title = 'Create Word Search';

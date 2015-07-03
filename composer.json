@@ -8,5 +8,12 @@
       "name": "jasonmm",
       "email": "jasonmm.github@gmail.com"
     }
-  ]
+  ],
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist"
+  },
+  "autoload": {
+    "psr-4": {"Jasonmm\\WordSearch\\": ""}
+  }
 }
