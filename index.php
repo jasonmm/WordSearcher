@@ -1,8 +1,7 @@
 <?php
-/*
+/**
 WordSearcher v0.8b   (http://wordsearcher.sf.net/)
-Copyright (C) 2007-2008   oldtoby24@users.sourceforge.net
-Released under http://www.gnu.org/licenses/gpl-3.0.txt 
+Copyright (C) 2007-2015
 */
 
 require_once('classes.inc.php');
