@@ -1,6 +1,6 @@
 {
   "name": "jasonmm/wordsearcher",
-  "description": "Web application to create word search grids.",
+  "description": "A web based PHP program to create word searches and word lists. Also provides the ability to save created word searches for later printing and the ability to import word lists from various sources.",
   "minimum-stability": "stable",
   "license": "proprietary",
   "authors": [
