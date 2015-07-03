@@ -1,0 +1,3 @@
+To install WordSearcher uncompress the archive into the document root of 
+your web server.  Then browse to http://<server name>/wordsearcher/ to 
+access the program.

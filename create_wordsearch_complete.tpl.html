@@ -1,0 +1,40 @@
+<?php
+/*
+WordSearcher v0.8b   (http://wordsearcher.sf.net/)
+Copyright (C) 2007-2008   oldtoby24@users.sourceforge.net
+Released under http://www.gnu.org/licenses/gpl-3.0.txt 
+*/
+
+$wordsearchobj_for_form = base64_encode(gzcompress(serialize($ws), 9));
+?>
+
+<CENTER>
+<H2>Word Search Created Successfully!</H2>
+<BR>
+<FORM name="formWordSearchActions" action="#" method="post" target="_blank">
+<INPUT type="hidden" name="wordsearchobj" id="worsearchobj" value="<?php echo $wordsearchobj_for_form; ?>">
+<INPUT type="button" id="btnViewWordSearch" value="View Word Search" onclick="viewWordSearch();">
+<INPUT type="submit" value="Print Word Search" onclick="this.form.action='print_wordsearch.php'; return true;">
+<INPUT type="submit" value="Save Word Search" onclick="this.form.action='save_wordsearch.php'; return true;">
+</FORM>
+<DIV id="divWordSearch" style="display: none;">
+<HR noshade width="50%" style="margin-bottom: 30px;">
+<?php $ws->DisplayHTML(); ?>
+</DIV>
+</CENTER>
+
+<SCRIPT language="javascript" type="text/javascript">
+document.getElementById('tdPageTitle').innerHTML = 'Word Search Created';
+function viewWordSearch() {
+	var wsdiv = document.getElementById('divWordSearch');
+	var wsviewbtn = document.getElementById('btnViewWordSearch');
+	if( wsdiv.style.display == 'none' ) {
+		wsdiv.style.display = 'block';
+		wsviewbtn.value = "Hide Word Search";
+	}
+	else {
+		wsdiv.style.display = 'none';
+		wsviewbtn.value = "View Word Search";
+	}
+}
+</SCRIPT>

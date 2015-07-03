@@ -1,0 +1,66 @@
+<?php
+/*
+WordSearcher v0.8b   (http://wordsearcher.sf.net/)
+Copyright (C) 2007-2008   oldtoby24@users.sourceforge.net
+Released under http://www.gnu.org/licenses/gpl-3.0.txt 
+*/
+?>
+
+<SCRIPT language="JavaScript" type="text/javascript">
+var fieldsets = new Array('wordlist', 'text');
+
+function change_fieldset(id) {
+	for( var i = 0; i < fieldsets.length; i++ ) {
+		if( fieldsets[i] == id ) {
+			document.getElementById('fs_'+fieldsets[i]).style.border = 'solid 2px blue';
+			document.getElementById('legend_'+fieldsets[i]).style.backgroundColor = 'lightblue';
+			document.getElementById('legend_'+fieldsets[i]).style.color = 'black';
+		}
+		else {
+			document.getElementById('fs_'+fieldsets[i]).style.border = 'solid 1px grey';
+			document.getElementById('legend_'+fieldsets[i]).style.backgroundColor = 'white';
+			document.getElementById('legend_'+fieldsets[i]).style.color = 'grey';
+		}
+	}
+}
+</SCRIPT>
+
+<FORM method="post" enctype="multipart/form-data">
+<TABLE border="0" align="center" width="35%">
+<TR>
+<TD align="center">
+<FIELDSET id="fs_wordlist" style="border: solid 2px blue;">
+<LEGEND id="legend_wordlist" style="background-color: lightblue;">
+<INPUT type="radio" name="import_type" id="import_type_wordlist" value="wordlist" checked onclick="change_fieldset('wordlist');"> 
+<LABEL for="import_type_wordlist">Word List File</LABEL>
+</LEGEND>
+<INPUT type="file" name="wordlist_file" id="wordlist_file" size="40"><BR>
+<SPAN style="font-size: 10pt; color: grey;">
+The word list file must have one word per line.
+</SPAN>
+</FIELDSET>
+</TD>
+</TR>
+<TR>
+<TD align="center">
+<FIELDSET id="fs_text" style="border: solid 1px grey;">
+<LEGEND id="legend_text" style="background-color: white; color: grey;">
+<INPUT type="radio" name="import_type" id="import_type_text" value="text" onclick="change_fieldset('text');">
+<LABEL for="import_type_text">Text File</LABEL>
+</LEGEND>
+<INPUT type="file" name="text_file" id="text_file" size="40"><BR>
+Number of Words: <INPUT type="text" name="num_words" id="num_words" size="3" maxlength="3" value="10"><BR>
+<SPAN style="white-space: nowrap;">Min. Word Length: <INPUT type="text" name="min_word_len" id="min_word_len" size="3" maxlength="3" value="4"></SPAN> &nbsp; 
+<SPAN style="white-space: nowrap;">Max. Word Length: <INPUT type="text" name="max_word_len" id="max_word_len" size="3" maxlength="3" value="10"></SPAN><BR>
+<SPAN style="font-size: 10pt; color: grey;">
+The program will use the above settings to create a world list from the words found in the specified file.
+</SPAN>
+</TD>
+</TR>
+<TR>
+<TD align="center">
+<INPUT type="submit" value="Import Word List">
+</TD>
+</TR>
+</TABLE>
+</FORM>

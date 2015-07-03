@@ -1,0 +1,12 @@
+{
+  "name": "jasonmm/wordsearcher",
+  "description": "Web application to create word search grids.",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "jasonmm",
+      "email": "jasonmm.github@gmail.com"
+    }
+  ]
+}
