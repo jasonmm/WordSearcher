@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %} [WordSearcher]</title>
+    <link rel="stylesheet" href="assets/wordsearcher.css" type="text/css">
+</head>
+<body>
+
+<table border="0" cellspacing="0" width="100%">
+    <tr>
+        <td width="50%" align="left" id="logo-title">
+            <a href="./">
+                WordSearcher &nbsp;
+                <img src="wordsearcher.png" width="16" height="16" border="0" alt="">
+            </a>
+        </td>
+        <td width="50%" align="right" id="page-title">
+            {{ block('title') }}
+        </td>
+    </tr>
+</table>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

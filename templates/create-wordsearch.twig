@@ -1,0 +1,109 @@
+{% extends "layout.twig" %}
+
+{% block title %}Create Word Search{% endblock %}
+
+{% block content %}
+    <form name="formCreateWordSearch" action="create_wordsearch.php" method="post">
+        <table border="0" align="center">
+            <tr>
+                <td valign="top">
+                    <strong>Word List:</strong><br>
+                    <small>
+                        Type each word on a separate line.<BR>
+                    </small>
+                    <textarea id="word-list" name="wordlist" rows="15" cols="20">
+                        {{ wordList }}
+                    </textarea>
+                    <br>
+                    <small>
+                        <a href="import_wordlist.php" target="_blank">Import Word List</a>
+                    </small>
+                </td>
+                <td valign="top">
+                    <strong>Options:</strong><br>
+                    <table border="0">
+                        <tr>
+                            <td>Title:</td>
+                            <td><input type="text" name="title" id="title"
+                                       value="{{ wordSearchTitle }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Rows:</td>
+                            <td><input type="text" name="rows" id="rows" size="2" maxlength="3"
+                                       value="{{ wordSearchRows }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Columns:</td>
+                            <td><input type="text" name="cols" id="cols" size="2" maxlength="2"
+                                       value="{{ wordSearchCols }}"></td>
+                        </tr>
+                        <tr>
+                            <td>Sort Word List:</td>
+                            <td>
+                                <select name="sort_wordlist" id="sort_wordlist">
+                                    <option value="alpha"
+                                            {% if wordListSortBy == 'alpha' %}selected{% endif %}>
+                                        alphabetically
+                                    </option>
+                                    <option value="strlen"
+                                            {% if wordListSortBy == 'strlen' %}selected{% endif %}>
+                                        by word length
+                                    </option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="checkbox" name="show_date" id="show_date"
+                                       value="1" {% if wordSearchShowDate %}checked{% endif %}>
+                                <label for="show_date">Show Date</label><br>
+                                <input type="checkbox" name="words_in_uppercase"
+                                       id="words_in_uppercase" value="1"
+                                       {% if wordSearchUppercase %}checked{% endif %}>
+                                <label for="words_in_uppercase">Words In Uppercase</label><br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center"
+                                style="padding-top: 30px; padding-bottom: 10px;">
+                                <input type="submit" value="Create Word Search">
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    {% if isCreated %}
+        <div id="word-search-is-created">
+            This word search has already been created. Clicking the
+            <strong>Create Word Search</strong>
+            button above will create a new word search grid. To print the existing word search
+            grid click the <strong>Print Word Search</strong> button below.
+            <form name="formWordSearchActions" action="print_wordsearch.php" method="post"
+                  target="_blank">
+                <input type="hidden" name="wordsearchobj" id="worsearchobj"
+                       value="{{ wordSearchObj }}">
+                <input type="submit" id="word-search-created-print-button"
+                       value="Print Word Search">
+            </form>
+        </div>
+    {% endif %}
+
+    <hr noshade width="50%" class="wide-margin">
+
+    <form name="formLoadWordSearch" action="index.php" method="post" enctype="multipart/form-data">
+        <div id="load-word-search">
+            Word Search File:
+            <input type="file" name="wordsearch_file" id="wordsearch_file" size="50"><br>
+            <input type="submit" value="Load Word Search File">
+        </div>
+    </form>
+
+    <script language="javascript" type="text/javascript">
+        document.getElementById('word-list').focus();
+    </script>
+{% endblock %}
+
+

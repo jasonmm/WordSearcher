@@ -1,0 +1,49 @@
+#logo-title {
+    font-size: 14pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    border-bottom: dashed black 2px;
+}
+
+#logo-title a {
+    text-decoration: none;
+    color: black;
+}
+
+#page-title {
+    font-size: 10pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    border-bottom: dashed black 2px;
+}
+
+#word-search-is-created {
+    color: grey;
+    margin-top: 20px;
+    padding: 3px;
+    font-size: 8pt;
+    font-family: Arial, sans-serif;
+    width: 50%;
+    border: solid grey 1px;
+    -moz-border-radius: 10px;
+}
+
+#word-search-created-print-button {
+    font-size: 8pt;
+    font-family: Arial, sans-serif;
+    margin-top: 10px;
+}
+
+hr.wide-margin {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+div#load-word-search {
+    background-color: lightgrey;
+    width: 50%;
+    padding: 5px;
+    border: solid black 1px;
+    margin: auto auto;
+}
+

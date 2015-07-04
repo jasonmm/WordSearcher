@@ -15,5 +15,8 @@
   },
   "autoload": {
     "psr-4": {"Jasonmm\\WordSearch\\": ""}
+  },
+  "require": {
+    "twig/twig": "1.9.*"
   }
 }
