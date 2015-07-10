@@ -1,8 +1,8 @@
 
 <SCRIPT language="JavaScript" type="text/javascript">
 if( window.opener ) {
-	if( window.opener.document.getElementById('wordlist') ) {
-		window.opener.document.getElementById('wordlist').value = "<?php echo str_replace("\r", '', str_replace("\n", '\n', $wordlist)); ?>";
+	if( window.opener.document.getElementById('word-list') ) {
+		window.opener.document.getElementById('word-list').value = "<?php echo str_replace("\r", '', str_replace("\n", '\n', $wordlist)); ?>";
 		if( window.opener.document.getElementById('title') ) {
 			window.opener.document.getElementById('title').value = "<?php echo $title; ?>";
 		}

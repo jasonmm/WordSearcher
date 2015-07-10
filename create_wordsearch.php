@@ -3,19 +3,30 @@
 use Jasonmm\WordSearch\WordSearch;
 
 require_once 'vendor/autoload.php';
-require_once('classes.inc.php');
+$config = require_once('config.php');
 
 $page_title = 'Building Word Search...';
-require_once('html_top.tpl.html');
 
 $ws = new WordSearch($_REQUEST['title'], $_REQUEST['rows'], $_REQUEST['cols']);
 $ws->SetWordList(explode("\n", $_REQUEST['wordlist']), $_REQUEST['sort_wordlist']);
 $ws->SetShowDate(isset($_REQUEST['show_date']));
 $ws->SetWordsInUppercase(isset($_REQUEST['words_in_uppercase']));
-$ws->Build();
+$ws->Build($config['MAX_PLACEMENT_TRIES']);
 
-require_once('create_wordsearch_complete.tpl.html');
+// Create our Twig object.
+$loader = new Twig_Loader_Filesystem('templates');
+$twig = new Twig_Environment($loader, array());
 
-require_once('html_bottom.tpl.html');
+$wordSearchHtml = $ws->DisplayHTML($twig, $config['VERSION_STRING']);
+
+// Render the template.
+$params = [
+    'ws' => $ws,
+    'wordList' => $ws->GetWordList("\n"),
+    'wordSearchObj' => base64_encode(gzcompress(serialize($ws), 9)),
+    'wordSearchHtml' => $wordSearchHtml,
+];
+echo $twig->render('create-wordsearch-complete.twig', $params);
+
 
 

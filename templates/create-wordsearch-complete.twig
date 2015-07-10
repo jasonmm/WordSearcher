@@ -1,0 +1,40 @@
+{% extends "layout.twig" %}
+
+{% block title %}Create Word Search{% endblock %}
+
+{% block content %}
+<?php
+$wordsearchobj_for_form = base64_encode(gzcompress(serialize($ws), 9));
+?>
+
+<div>
+    <h2>Word Search Created Successfully!</h2>
+    <br>
+    <form name="formWordSearchActions" action="#" method="post" target="_blank">
+        <input type="hidden" name="wordsearchobj" id="worsearchobj" value="<?php echo $wordsearchobj_for_form; ?>">
+        <input type="button" id="btnViewWordSearch" value="View Word Search" onclick="viewWordSearch();">
+        <input type="submit" value="Print Word Search" onclick="this.form.action='print_wordsearch.php'; return true;">
+        <input type="submit" value="Save Word Search" onclick="this.form.action='save_wordsearch.php'; return true;">
+    </form>
+    <div id="divWordSearch" style="display: none;">
+        <hr noshade width="50%" style="margin-bottom: 30px;">
+        {{ wordSearchHtml|raw }}
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    document.getElementById('tdPageTitle').innerHTML = 'Word Search Created';
+    function viewWordSearch() {
+        var wsdiv = document.getElementById('divWordSearch');
+        var wsviewbtn = document.getElementById('btnViewWordSearch');
+        if( wsdiv.style.display == 'none' ) {
+            wsdiv.style.display = 'block';
+            wsviewbtn.value = "Hide Word Search";
+        }
+        else {
+            wsdiv.style.display = 'none';
+            wsviewbtn.value = "View Word Search";
+        }
+    }
+</script>
+{% endblock %}

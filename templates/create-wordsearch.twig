@@ -11,9 +11,8 @@
                     <small>
                         Type each word on a separate line.<BR>
                     </small>
-                    <textarea id="word-list" name="wordlist" rows="15" cols="20">
-                        {{ wordList }}
-                    </textarea>
+                    <textarea id="word-list" name="wordlist" rows="15"
+                              cols="20">{{ wordList }}</textarea>
                     <br>
                     <small>
                         <a href="import_wordlist.php" target="_blank">Import Word List</a>
@@ -25,28 +24,28 @@
                         <tr>
                             <td>Title:</td>
                             <td><input type="text" name="title" id="title"
-                                       value="{{ wordSearchTitle }}"></td>
+                                       value="{{ ws.GetTitle() }}"></td>
                         </tr>
                         <tr>
                             <td>Rows:</td>
                             <td><input type="text" name="rows" id="rows" size="2" maxlength="3"
-                                       value="{{ wordSearchRows }}"></td>
+                                       value="{{ ws.GetRows() }}"></td>
                         </tr>
                         <tr>
                             <td>Columns:</td>
                             <td><input type="text" name="cols" id="cols" size="2" maxlength="2"
-                                       value="{{ wordSearchCols }}"></td>
+                                       value="{{ ws.GetCols() }}"></td>
                         </tr>
                         <tr>
                             <td>Sort Word List:</td>
                             <td>
                                 <select name="sort_wordlist" id="sort_wordlist">
                                     <option value="alpha"
-                                            {% if wordListSortBy == 'alpha' %}selected{% endif %}>
+                                            {% if ws.GetSortBy() == 'alpha' %}selected{% endif %}>
                                         alphabetically
                                     </option>
                                     <option value="strlen"
-                                            {% if wordListSortBy == 'strlen' %}selected{% endif %}>
+                                            {% if ws.GetSortBy() == 'strlen' %}selected{% endif %}>
                                         by word length
                                     </option>
                                 </select>
@@ -55,11 +54,11 @@
                         <tr>
                             <td colspan="2">
                                 <input type="checkbox" name="show_date" id="show_date"
-                                       value="1" {% if wordSearchShowDate %}checked{% endif %}>
+                                       value="1" {% if ws.GetShowDate() %}checked{% endif %}>
                                 <label for="show_date">Show Date</label><br>
                                 <input type="checkbox" name="words_in_uppercase"
                                        id="words_in_uppercase" value="1"
-                                       {% if wordSearchUppercase %}checked{% endif %}>
+                                       {% if ws.GetWordsInUppercase() %}checked{% endif %}>
                                 <label for="words_in_uppercase">Words In Uppercase</label><br>
                             </td>
                         </tr>
@@ -75,7 +74,7 @@
         </table>
     </form>
 
-    {% if isCreated %}
+    {% if ws.IsCreated() %}
         <div id="word-search-is-created">
             This word search has already been created. Clicking the
             <strong>Create Word Search</strong>
