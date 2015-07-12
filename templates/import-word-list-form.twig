@@ -1,0 +1,88 @@
+{% extends "layout.twig" %}
+
+{% block title %}Import Word List{% endblock %}
+
+{% block content %}
+
+    <script language="JavaScript" type="text/javascript">
+        var fieldsets = ['wordlist', 'text'];
+
+        function change_fieldset(id) {
+            for (var i = 0; i < fieldsets.length; i++) {
+                if (fieldsets[i] == id) {
+                    document.getElementById('fs_' + fieldsets[i]).style.border = 'solid 2px blue';
+                    document.getElementById('legend_' + fieldsets[i]).style.backgroundColor = 'lightblue';
+                    document.getElementById('legend_' + fieldsets[i]).style.color = 'black';
+                }
+                else {
+                    document.getElementById('fs_' + fieldsets[i]).style.border = 'solid 1px grey';
+                    document.getElementById('legend_' + fieldsets[i]).style.backgroundColor = 'white';
+                    document.getElementById('legend_' + fieldsets[i]).style.color = 'grey';
+                }
+            }
+        }
+    </script>
+
+    <form method="post" enctype="multipart/form-data">
+        <table border="0" align="center" width="35%">
+            <tr>
+                <td align="center">
+                    <fieldset id="fs_wordlist" style="border: solid 2px blue;">
+                        <legend id="legend_wordlist" style="background-color: lightblue;">
+                            <input type="radio" name="import_type" id="import_type_wordlist"
+                                   value="wordlist" checked onclick="change_fieldset('wordlist');">
+                            <label for="import_type_wordlist">Word List File</label>
+                        </legend>
+                        <input type="file" name="wordlist_file" id="wordlist_file" size="40"><BR>
+
+                        <p style="font-size: 10pt; color: grey;">
+                            The word list file must have one word per line.
+                        </p>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <fieldset id="fs_text" style="border: solid 1px grey;">
+                        <legend id="legend_text" style="background-color: white; color: grey;">
+                            <input type="radio" name="import_type" id="import_type_text"
+                                   value="text" onclick="change_fieldset('text');">
+                            <label for="import_type_text">Text File</label>
+                        </legend>
+
+                        <div>
+                            <input type="file" name="text_file" id="text_file" size="40">
+                        </div>
+
+                        <label for="num_words">Number of Words:</label>
+                        <input type="text" name="num_words" id="num_words" size="3" maxlength="3"
+                               value="10">
+
+                        <div style="white-space: nowrap;">
+                            <label for="min_word_len">Min. Word Length:</label>
+                            <input type="text" name="min_word_len" id="min_word_len" size="3"
+                                   maxlength="3" value="4">
+                        </div>
+
+                        <div style="white-space: nowrap;">
+                            <label for="max_word_len">Max. Word Length:</label>
+                            <input type="text" name="max_word_len" id="max_word_len" size="3"
+                                   maxlength="3" value="10">
+                        </div>
+
+                        <p style="font-size: 10pt; color: grey;">
+                            The program will use the above settings to create a world list from
+                            the words found in the specified file. This option is intended to
+                            pull create a word list from stories, articles, or essays.
+                        </p>
+                    </fieldset>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type="submit" value="Import Word List">
+                </td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

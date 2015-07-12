@@ -1,0 +1,11 @@
+{% extends "layout.twig" %}
+
+{% block title %}Import Word List{% endblock %}
+
+{% block content %}
+    <label for="word-list">Word List:</label><br>
+    <textarea id="word-list" name="word-list" rows="15" cols="20">{{ wordList }}</textarea>
+    <div style="color: grey;">
+        Copy the above text into the other window's Word List field.
+    </div>
+{% endblock %}

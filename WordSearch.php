@@ -55,8 +55,38 @@ class WordSearch {
         return ($this->_uppercase_words);
     }
 
+    /**
+     * @return array the word list sorted by the current sort criteria.
+     */
+    protected function sortedWordList() {
+        $wl = $this->_wordlist;
+        if( $this->_sortby == 'alpha' ) {
+            sort($wl);
+        } else {
+            usort($wl, function ($a, $b) {
+                $aLen = strlen($a);
+                $bLen = strlen($b);
+                if( $aLen < $bLen ) {
+                    return (-1);
+                }
+                if( $bLen < $aLen ) {
+                    return (1);
+                }
+
+                return (0);
+            });
+        }
+        return $wl;
+    }
+
+    /**
+     * @param string $sep
+     *
+     * @return string
+     */
     public function GetWordList($sep = ";") {
-        return (implode($sep, $this->_wordlist));
+        $wl = $this->sortedWordList();
+        return (implode($sep, $wl));
     }
 
     public function SetWordList($wl, $sortby = null) {
@@ -167,7 +197,7 @@ class WordSearch {
      */
     public function DisplayHTML(Twig_Environment $twig, $version) {
         $grid = $this->_grid;
-        $wordList = $this->_wordlist;
+        $wordList = $this->sortedWordList();
 
         // Convert blanks to &nbsp; for display.
         foreach( $grid as $y => $row ) {
