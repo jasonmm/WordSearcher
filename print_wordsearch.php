@@ -3,7 +3,7 @@ require_once 'vendor/autoload.php';
 $config = require_once('config.php');
 
 // Unserialize the word search object.
-$ws = unserialize(gzuncompress(base64_decode($_REQUEST['wordsearchobj'])));
+$ws = unserialize(base64_decode($_REQUEST['wordsearchobj']));
 
 // Create our Twig object.
 $loader = new Twig_Loader_Filesystem('templates');

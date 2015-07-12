@@ -15,7 +15,11 @@ $ws = new WordSearch();
 // If a file was uploaded then we attempt to initialize the object from the
 // file.
 if( strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_FILES['wordsearch_file']) ) {
-    $ws->initFromFile($_FILES['wordsearch_file']['tmp_name']);
+    $ret = $ws->initFromFile($_FILES['wordsearch_file']['tmp_name']);
+    if( !($ret instanceof WordSearch) ) {
+        die('Error loading ' . $_FILES['wordsearch_file']['tmp_name'] . ': ' . $ret);
+    }
+    $ws = $ret;
 }
 
 // Create our Twig object.
@@ -24,9 +28,9 @@ $twig = new Twig_Environment($loader, array());
 
 // Render the template.
 $params = [
-    'ws' => $ws,
-    'wordList' => $ws->GetWordList("\n"),
-    'wordSearchObj' => base64_encode(gzcompress(serialize($ws), 9)),
+    'ws'            => $ws,
+    'wordList'      => $ws->GetWordList("\n"),
+    'wordSearchObj' => base64_encode(serialize($ws)),
 ];
 echo $twig->render('create-wordsearch.twig', $params);
 

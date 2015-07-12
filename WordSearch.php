@@ -202,9 +202,21 @@ class WordSearch {
      * Initialize this object from the given filename.
      *
      * @param string $fileName
+     *
+     * @return WordSearch|string
      */
     public function initFromFile($fileName) {
+        if( !file_exists($fileName) ) {
+            return 'File does not exist';
+        }
 
+        $contents = file_get_contents($fileName);
+        $ws = unserialize($contents);
+        if( $ws === false ) {
+            return 'Invalid WordSearcher file';
+        }
+
+        return $ws;
     }
 
     /**

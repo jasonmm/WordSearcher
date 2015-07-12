@@ -9,7 +9,7 @@
                 <td valign="top">
                     <strong>Word List:</strong><br>
                     <small>
-                        Type each word on a separate line.<BR>
+                        <label for="word-list">Type each word on a separate line.</label><BR>
                     </small>
                     <textarea id="word-list" name="wordlist" rows="15"
                               cols="20">{{ wordList }}</textarea>
@@ -22,22 +22,22 @@
                     <strong>Options:</strong><br>
                     <table border="0">
                         <tr>
-                            <td>Title:</td>
+                            <td><label for="title">Title:</label></td>
                             <td><input type="text" name="title" id="title"
                                        value="{{ ws.GetTitle() }}"></td>
                         </tr>
                         <tr>
-                            <td>Rows:</td>
+                            <td><label for="rows">Rows:</label></td>
                             <td><input type="text" name="rows" id="rows" size="2" maxlength="3"
                                        value="{{ ws.GetRows() }}"></td>
                         </tr>
                         <tr>
-                            <td>Columns:</td>
+                            <td><label for="cols">Columns:</label></td>
                             <td><input type="text" name="cols" id="cols" size="2" maxlength="2"
                                        value="{{ ws.GetCols() }}"></td>
                         </tr>
                         <tr>
-                            <td>Sort Word List:</td>
+                            <td><label for="sort_wordlist">Sort Word List:</label></td>
                             <td>
                                 <select name="sort_wordlist" id="sort_wordlist">
                                     <option value="alpha"
@@ -75,7 +75,7 @@
     </form>
 
     {% if ws.IsCreated() %}
-        <div id="word-search-is-created">
+        <div id="word-search-is-created" style="margin-left: auto; margin-right: auto;">
             This word search has already been created. Clicking the
             <strong>Create Word Search</strong>
             button above will create a new word search grid. To print the existing word search
