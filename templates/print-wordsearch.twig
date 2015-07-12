@@ -1,0 +1,15 @@
+{% extends "layout.twig" %}
+
+{% block title %}Print Word Search{% endblock %}
+
+{% block content %}
+    {{ wordSearchHtml|raw }}
+
+    <script language="javascript" type="text/javascript">
+        window.onload = function () {
+            if (window.print()) {
+                window.close();
+            }
+        }
+    </script>
+{% endblock %}

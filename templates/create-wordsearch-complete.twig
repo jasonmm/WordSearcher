@@ -11,7 +11,7 @@ $wordsearchobj_for_form = base64_encode(gzcompress(serialize($ws), 9));
     <h2>Word Search Created Successfully!</h2>
     <br>
     <form name="formWordSearchActions" action="#" method="post" target="_blank">
-        <input type="hidden" name="wordsearchobj" id="worsearchobj" value="<?php echo $wordsearchobj_for_form; ?>">
+        <input type="hidden" name="wordsearchobj" id="worsearchobj" value="{{ wordSearchObj }}">
         <input type="button" id="btnViewWordSearch" value="View Word Search" onclick="viewWordSearch();">
         <input type="submit" value="Print Word Search" onclick="this.form.action='print_wordsearch.php'; return true;">
         <input type="submit" value="Save Word Search" onclick="this.form.action='save_wordsearch.php'; return true;">

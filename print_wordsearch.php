@@ -1,22 +1,16 @@
 <?php
 require_once 'vendor/autoload.php';
+$config = require_once('config.php');
 
-require_once('classes.inc.php');
+// Unserialize the word search object.
 $ws = unserialize(gzuncompress(base64_decode($_REQUEST['wordsearchobj'])));
-?>
-<HTML>
-<HEAD><TITLE><?php echo $ws->_title; ?></TITLE>
-<BODY>
-<CENTER><H2><?php echo $ws->_title; ?></H2></CENTER>
-<?php
-$ws->DisplayHTML();
-?>
-<SCRIPT language="javascript" type="text/javascript">
-    window.onload = function () {
-        if (window.print()) {
-            window.close();
-        }
-    }
-</SCRIPT>
-</BODY>
-</HTML>
+
+// Create our Twig object.
+$loader = new Twig_Loader_Filesystem('templates');
+$twig = new Twig_Environment($loader, array());
+
+// Get the HTML for the word search.
+$wordSearchHtml = $ws->DisplayHTML($twig, $config['VERSION_STRING']);
+
+// Output the page.
+echo $twig->render('print-wordsearch.twig', ['wordSearchHtml' => $wordSearchHtml]);
