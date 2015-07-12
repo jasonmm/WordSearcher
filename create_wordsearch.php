@@ -23,7 +23,7 @@ $wordSearchHtml = $ws->DisplayHTML($twig, $config['VERSION_STRING']);
 $params = [
     'ws' => $ws,
     'wordList' => $ws->GetWordList("\n"),
-    'wordSearchObj' => base64_encode(gzcompress(serialize($ws), 9)),
+    'wordSearchObj' => base64_encode(serialize($ws)),
     'wordSearchHtml' => $wordSearchHtml,
 ];
 echo $twig->render('create-wordsearch-complete.twig', $params);
