@@ -29,7 +29,7 @@ $twig = new Twig_Environment($loader, array());
 // Render the template.
 $params = [
     'ws'            => $ws,
-    'wordList'      => $ws->GetWordList("\n"),
+    'wordList'      => $ws->getWordList("\n"),
     'wordSearchObj' => base64_encode(serialize($ws)),
 ];
 echo $twig->render('create-wordsearch.twig', $params);

@@ -3,79 +3,79 @@ namespace Jasonmm\WordSearch;
 
 use Twig_Environment;
 
+/**
+ * Class WordSearch creates a word search grid and can be used to create
+ * the HTML to display the grid.
+ * @package Jasonmm\WordSearch
+ */
 class WordSearch {
-    private $_directions = array(
-        array(-1, 0, 1, 1, 1, 0, -1, -1),            // x
+    private $directions = array(
+        array(-1, 0, 1, 1, 1, 0, -1, -1),           // x
         array(-1, -1, -1, 0, 1, 1, 1, 0)            // y
     );
-
-    var $_grid = array();
-    var $_rows = 20;
-    var $_cols = 20;
-    var $_title = '';
-    var $_wordlist = array();
-    var $_wordlist_positions = array();
-    var $_show_date = false;
-    var $_uppercase_words = true;
-    var $_creation_date = '';
-    var $_sortby = 'alpha';
+    private $grid = array();
+    private $rows = 20;
+    private $cols = 20;
+    private $title = '';
+    private $wordList = array();
+    private $wordListPositions = array();
+    private $showDate = false;
+    private $uppercaseWords = true;
+    private $sortBy = 'alpha';
 
     public function __construct($title = '', $rows = 20, $cols = 20) {
-        $this->_rows = $rows;
-        $this->_cols = $cols;
-        $this->_title = $title;
-        $this->_grid = array();
+        $this->rows = $rows;
+        $this->cols = $cols;
+        $this->title = $title;
+        $this->grid = array();
     }
 
-    public function IsCreated() {
-        return (!empty($this->_grid));
+    public function isCreated() {
+        return !empty($this->grid);
     }
 
-    public function GetTitle() {
-        return ($this->_title);
+    public function getTitle() {
+        return $this->title;
     }
 
-    public function GetRows() {
-        return ($this->_rows);
+    public function getRows() {
+        return $this->rows;
     }
 
-    public function GetCols() {
-        return ($this->_cols);
+    public function getCols() {
+        return $this->cols;
     }
 
-    public function GetSortBy() {
-        return ($this->_sortby);
+    public function getSortBy() {
+        return $this->sortBy;
     }
 
-    public function GetShowDate() {
-        return ($this->_show_date);
-    }
-
-    public function GetWordsInUppercase() {
-        return ($this->_uppercase_words);
+    public function getShowDate() {
+        return $this->showDate;
     }
 
     /**
      * @return array the word list sorted by the current sort criteria.
      */
     protected function sortedWordList() {
-        $wl = $this->_wordlist;
-        if( $this->_sortby == 'alpha' ) {
+        $wl = $this->wordList;
+        if( $this->sortBy == 'alpha' ) {
             sort($wl);
         } else {
             usort($wl, function ($a, $b) {
                 $aLen = strlen($a);
                 $bLen = strlen($b);
                 if( $aLen < $bLen ) {
-                    return (-1);
+                    return -1;
                 }
                 if( $bLen < $aLen ) {
-                    return (1);
+                    return 1;
                 }
 
-                return (0);
+                return 0;
             });
         }
+
         return $wl;
     }
 
@@ -84,42 +84,57 @@ class WordSearch {
      *
      * @return string
      */
-    public function GetWordList($sep = ";") {
+    public function getWordList($sep = ";") {
         $wl = $this->sortedWordList();
-        return (implode($sep, $wl));
+
+        return implode($sep, $wl);
     }
 
-    public function SetWordList($wl, $sortby = null) {
+    /**
+     * @param array  $wl
+     * @param string $sortBy
+     *
+     * @return int the number of words added to the word list
+     */
+    public function setWordList(array $wl, $sortBy = null) {
         if( !is_array($wl) ) {
-            return (false);
+            return 0;
         }
-        if( $sortby != null ) {
-            $this->_sortby = $sortby;
+        if( $sortBy != null ) {
+            $this->sortBy = $sortBy;
         }
-        $this->_wordlist = $wl;
-        usort($this->_wordlist, sprintf("cmp_%s", $this->_sortby));
+        $this->wordList = $wl;
+        $this->wordList = $this->sortedWordList();
 
-        return (count($this->_wordlist));
+        return count($this->wordList);
     }
 
-    public function SetShowDate($show) {
-        $this->_show_date = $show;
+    /**
+     * @param string $show
+     */
+    public function setShowDate($show) {
+        $this->showDate = $show;
     }
 
-    public function SetWordsInUppercase($up) {
-        $this->_uppercase_words = $up;
+    /**
+     * @param bool $up
+     */
+    public function setWordsInUppercase($up) {
+        $this->uppercaseWords = $up;
     }
 
     /**
      * @param int $maxPlacementTries
+     *
+     * @throws \Exception
      */
-    public function Build($maxPlacementTries = 100) {
+    public function build($maxPlacementTries = 100) {
         $alphabet = 'abcdefghijklmnopqrstuvwxyz';
 
-        $this->_init_grid();
+        $this->initGrid();
 
         // Loop over each word in the word list.
-        foreach( $this->_wordlist as $curWord ) {
+        foreach( $this->wordList as $curWord ) {
             $curWord = trim($curWord, "\r\n");
             $curWordLen = strlen($curWord);
 
@@ -134,26 +149,29 @@ class WordSearch {
             $numTries = 0;
             while( $numTries++ < $maxPlacementTries ) {
                 // Pick a random row, column, and direction.
-                $randRow = mt_rand(0, $this->_rows - 1);
-                $randCol = mt_rand(0, $this->_cols - 1);
+                $randRow = mt_rand(0, $this->rows - 1);
+                $randCol = mt_rand(0, $this->cols - 1);
                 $dirIndex = mt_rand(0, 7);
 
                 // Get the x and y directions
-                $dx = $this->_directions[0][$dirIndex];
-                $dy = $this->_directions[1][$dirIndex];
+                $dx = $this->directions[0][$dirIndex];
+                $dy = $this->directions[1][$dirIndex];
 
                 // Check to see if the word will fit in the word search grid.
                 $endRow = $randRow + ($dy * $curWordLen);
                 $endCol = $randCol + ($dx * $curWordLen);
-                if( $endRow < 0 || $endRow >= $this->_rows ||
-                    $endCol < 0 || $endCol >= $this->_cols
+                if( $endRow < 0 || $endRow >= $this->rows ||
+                    $endCol < 0 || $endCol >= $this->cols
                 ) {
                     continue;
                 }
 
-                // Check to see if placing this word here will work with the other words already placed in the grid.
+                // Check to see if placing this word here will work with the
+                // other words already placed in the grid.
                 for( $i = 0; $i < $curWordLen; $i++ ) {
-                    if( $this->_gridSqIsUnacceptable($randRow, $randCol, substr($curWord, $i, 1)) === true ) {
+                    $char = substr($curWord, $i, 1);
+                    $cannotBePlaced = $this->gridSquareIsUnacceptable($randRow, $randCol, $char);
+                    if( $cannotBePlaced === true ) {
                         continue 2;
                     }
                     $randRow += $dy;
@@ -168,22 +186,28 @@ class WordSearch {
                 for( $i = $curWordLen - 1; $i >= 0; $i-- ) {
                     $randRow -= $dy;
                     $randCol -= $dx;
-                    $this->_grid[$randRow][$randCol] = strtoupper(substr($curWord, $i, 1));
+                    $this->grid[$randRow][$randCol] = strtoupper(substr($curWord, $i, 1));
                 }
                 $start_point = array('x' => $randCol, 'y' => $randRow);
-                array_unshift($this->_wordlist_positions, array('word' => $curWord, 'start_point' => $start_point, 'end_point' => $end_point));
+                $newWordListPosition = array(
+                    'word'        => $curWord,
+                    'start_point' => $start_point,
+                    'end_point'   => $end_point
+                );
+                array_unshift($this->wordListPositions, $newWordListPosition);
                 break;
             }
             if( $numTries >= $maxPlacementTries ) {
-                die(sprintf("Error: Unable to place \"%s\" in word search.  Try using fewer words or a larger grid.", $curWord));
+                $msg = 'Error: Unable to place "' . $curWord . '" in word search.  Try using fewer words or a larger grid.';
+                throw new \Exception($msg);
             }
         }
 
         // Fill in the rest of the grid with random letters.
-        for( $y = 0; $y < $this->_rows; $y++ ) {
-            for( $x = 0; $x < $this->_cols; $x++ ) {
-                if( $this->_grid[$y][$x] == ' ' ) {
-                    $this->_grid[$y][$x] = strtoupper(substr($alphabet, mt_rand(0, 25), 1));
+        for( $y = 0; $y < $this->rows; $y++ ) {
+            for( $x = 0; $x < $this->cols; $x++ ) {
+                if( $this->grid[$y][$x] == ' ' ) {
+                    $this->grid[$y][$x] = strtoupper(substr($alphabet, mt_rand(0, 25), 1));
                 }
             }
         }
@@ -195,8 +219,8 @@ class WordSearch {
      *
      * @return string the HTML used to display the word search grid.
      */
-    public function DisplayHTML(Twig_Environment $twig, $version) {
-        $grid = $this->_grid;
+    public function getHtml(Twig_Environment $twig, $version) {
+        $grid = $this->grid;
         $wordList = $this->sortedWordList();
 
         // Convert blanks to &nbsp; for display.
@@ -209,19 +233,19 @@ class WordSearch {
         }
 
         // Convert words to uppercase, if necessary.
-        if( $this->_uppercase_words ) {
+        if( $this->uppercaseWords ) {
             foreach( $wordList as &$word ) {
                 $word = strtoupper($word);
             }
         }
 
         $params = [
-            'numRows'         => $this->_rows,
-            'numCols'         => $this->_cols,
+            'numRows'         => $this->rows,
+            'numCols'         => $this->cols,
             'grid'            => $grid,
             'wordList'        => $wordList,
             'wordListLen'     => count($wordList),
-            'createdOnString' => $this->_show_date ? 'Word Search Created ' . date('r') . '<br>' : '',
+            'createdOnString' => $this->showDate ? 'Word Search Created ' . date('r') . '<br>' : '',
             'version'         => $version,
         ];
 
@@ -262,14 +286,18 @@ class WordSearch {
      *
      * @return boolean
      */
-    private function _gridSqIsUnacceptable($row, $col, $ch) {
-        return ($this->_grid[$row][$col] != ' ' && $this->_grid[$row][$col] != $ch);
+    private function gridSquareIsUnacceptable($row, $col, $ch) {
+        return $this->grid[$row][$col] != ' ' && $this->grid[$row][$col] != $ch;
     }
 
-    private function _init_grid() {
-        $this->_grid = array_fill(0, $this->_rows, ' ');
-        for( $i = 0; $i < count($this->_grid); $i++ ) {
-            $this->_grid[$i] = array_fill(0, $this->_cols, ' ');
+    /**
+     * Initialize the grid array with spaces.
+     * @access private
+     */
+    private function initGrid() {
+        $this->grid = array_fill(0, $this->rows, ' ');
+        for( $i = 0; $i < count($this->grid); $i++ ) {
+            $this->grid[$i] = array_fill(0, $this->cols, ' ');
         }
     }
 }
