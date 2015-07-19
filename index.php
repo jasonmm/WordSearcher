@@ -33,4 +33,3 @@ $params = [
     'wordSearchObj' => base64_encode(serialize($ws)),
 ];
 echo $twig->render('create-wordsearch.twig', $params);
-

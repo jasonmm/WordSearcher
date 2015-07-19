@@ -32,6 +32,3 @@ $params = [
     'wordSearchHtml' => $wordSearchHtml,
 ];
 echo $twig->render('create-wordsearch-complete.twig', $params);
-
-
-
