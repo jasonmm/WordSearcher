@@ -265,7 +265,7 @@ class WordSearch {
         }
 
         $contents = file_get_contents($fileName);
-        $ws = unserialize($contents);
+        $ws = unserialize(base64_decode($contents));
         if( $ws === false ) {
             return 'Invalid WordSearcher file';
         }

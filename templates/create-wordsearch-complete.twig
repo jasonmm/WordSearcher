@@ -3,10 +3,6 @@
 {% block title %}Create Word Search{% endblock %}
 
 {% block content %}
-<?php
-$wordsearchobj_for_form = base64_encode(gzcompress(serialize($ws), 9));
-?>
-
 <div>
     <h2>Word Search Created Successfully!</h2>
     <br>
