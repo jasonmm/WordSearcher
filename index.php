@@ -1,9 +1,4 @@
 <?php
-/**
- * WordSearcher v0.8b   (http://wordsearcher.sf.net/)
- * Copyright (C) 2007-2015
- */
-
 use Jasonmm\WordSearch\WordSearch;
 
 require_once 'vendor/autoload.php';
