@@ -267,9 +267,9 @@ class WordSearch
         }
 
         $contents = file_get_contents($fileName);
-        $ws = unserialize(base64_decode($contents));
-        if ($ws === false) {
-            return 'Invalid WordSearcher file';
+        $ws = unserialize(base64_decode($contents), ['allowed_classes' => [WordSearch::class]]);
+        if (!$ws instanceof WordSearch) {
+            return 'Invalid WordSearcher file for initialization.';
         }
 
         return $ws;
