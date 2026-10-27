@@ -1,12 +1,15 @@
 <?php
+
 namespace Jasonmm\WordSearch;
 
 /**
  * Class WordList contains a list of words.  Also has methods that can be
  * used to create a word list.
+ *
  * @package Jasonmm\WordSearch
  */
-class WordList {
+class WordList
+{
     /**
      * @param string $fileName
      * @param int    $numWords
@@ -17,13 +20,14 @@ class WordList {
      * @return array
      * @throws \Exception
      */
-    public function createFromTextFile($fileName, $numWords = 10, $minLen = 5, $maxLen = 10, $maxCycles = 50) {
+    public function createFromTextFile(string $fileName, int $numWords = 10, int $minLen = 5, int $maxLen = 10, int $maxCycles = 50): array
+    {
         mt_srand();
 
         $wordList = array();
 
         // Open the file.
-        if( ($fp = @fopen($fileName, 'r')) === false ) {
+        if (($fp = @fopen($fileName, 'r')) === false) {
             throw new \Exception(sprintf("Error opening file (%s): %s", $fileName, $php_errormsg));
         }
 
@@ -37,8 +41,8 @@ class WordList {
         // We keep choosing random lines to look at until we have enough words in
         // our word list or we feel like we've looked long enough.
         $cycles = 0;
-        while( count($wordList) < $numWords && $cycles < $maxCycles ) {
-            for( $i = 0; $i < $rnd_lines_cnt; $i++ ) {
+        while (count($wordList) < $numWords && $cycles < $maxCycles) {
+            for ($i = 0; $i < $rnd_lines_cnt; $i++) {
                 $rnd_lines[] = mt_rand(1, $num_lines);
             }
             $rnd_lines = array_unique($rnd_lines);
@@ -46,12 +50,12 @@ class WordList {
 
             // Read through the file getting the random words.
             $line_num = 0;
-            while( $line = fgets($fp) ) {
+            while ($line = fgets($fp)) {
                 $line_num++;
 
                 // If the current line number is the next line number we are to
                 // look at then we look at it.
-                if( $line_num == $rnd_lines[0] ) {
+                if ($line_num == $rnd_lines[0]) {
                     // Create array of words on the line.
                     $words = explode(' ', $line);
                     $num_words_on_line = count($words);
@@ -59,9 +63,9 @@ class WordList {
                     // Loop for the number of words on the line.  Each iteration
                     // picks a random word and decides if it qualifies to be
                     // included in the word list.
-                    for( $i = 0; $i < $num_words_on_line; $i++ ) {
+                    for ($i = 0; $i < $num_words_on_line; $i++) {
                         $word_index = mt_rand(1, $num_words_on_line);
-                        if( !isset($words[$word_index]) ) {
+                        if (!isset($words[$word_index])) {
                             continue;
                         }
                         $random_word = trim(strtolower($words[$word_index]));
@@ -73,7 +77,7 @@ class WordList {
                         $tooLong = strlen($random_word) > $maxLen;
                         $tooShort = strlen($random_word) < $minLen;
                         $alreadyInList = in_array($random_word, $wordList);
-                        if( strstr($random_word, '*') || $tooLong || $tooShort || $alreadyInList ) {
+                        if (strstr($random_word, '*') || $tooLong || $tooShort || $alreadyInList) {
                             continue;
                         }
 
@@ -87,7 +91,7 @@ class WordList {
                 }
 
                 // If we have enough words then we stop looking.
-                if( count($wordList) >= $numWords ) {
+                if (count($wordList) >= $numWords) {
                     break;
                 }
             }
@@ -106,10 +110,11 @@ class WordList {
      *
      * @return int
      */
-    private function countLines(&$fp) {
+    private function countLines($fp): int
+    {
         $save_pos = ftell($fp);
         $cnt = 0;
-        while( fgets($fp) ) {
+        while (fgets($fp)) {
             $cnt++;
         }
         fseek($fp, $save_pos);

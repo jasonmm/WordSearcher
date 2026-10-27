@@ -12,7 +12,17 @@ $config = require_once('config.php');
 
 $page_title = 'Building Word Search...';
 
-$ws = new WordSearch($_REQUEST['title'], $_REQUEST['rows'], $_REQUEST['cols']);
+$numRows = null;
+if (!empty($_REQUEST['rows'])) {
+    $numRows = intval($_REQUEST['rows']);
+}
+
+$numCols = null;
+if (!empty($_REQUEST['cols'])) {
+    $numCols = intval($_REQUEST['cols']);
+}
+
+$ws = new WordSearch($_REQUEST['title'], $numRows, $numCols);
 $ws->setWordList(explode("\n", $_REQUEST['wordlist']), $_REQUEST['sort_wordlist']);
 $ws->setShowDate(isset($_REQUEST['show_date']));
 $ws->setWordsInUppercase(isset($_REQUEST['words_in_uppercase']));
