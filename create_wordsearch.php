@@ -2,6 +2,9 @@
 
 use Jasonmm\WordSearch\WordSearch;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
 require_once 'vendor/autoload.php';
@@ -16,7 +19,7 @@ $ws->setWordsInUppercase(isset($_REQUEST['words_in_uppercase']));
 
 try {
     $ws->build($config['MAX_PLACEMENT_TRIES']);
-} catch(Exception $e) {
+} catch (Exception $e) {
     die($e->getMessage());
 }
 
@@ -24,13 +27,17 @@ try {
 $loader = new FilesystemLoader('templates');
 $twig = new Environment($loader, array());
 
-$wordSearchHtml = $ws->getHtml($twig, $config['VERSION_STRING']);
+try {
+    $wordSearchHtml = $ws->getHtml($twig, $config['VERSION_STRING']);
 
-// Render the template.
-$params = [
-    'ws' => $ws,
-    'wordList' => $ws->getWordList("\n"),
-    'wordSearchObj' => base64_encode(serialize($ws)),
-    'wordSearchHtml' => $wordSearchHtml,
-];
-echo $twig->render('create-wordsearch-complete.twig', $params);
+    // Render the template.
+    $params = [
+        'ws'             => $ws,
+        'wordList'       => $ws->getWordList("\n"),
+        'wordSearchObj'  => base64_encode(serialize($ws)),
+        'wordSearchHtml' => $wordSearchHtml,
+    ];
+    echo $twig->render('create-wordsearch-complete.twig', $params);
+} catch (LoaderError|RuntimeError|SyntaxError $e) {
+    die('Rendering error!');
+}
