@@ -252,7 +252,7 @@ class WordSearch {
             'grid'            => $grid,
             'wordList'        => $wordList,
             'wordListLen'     => count($wordList),
-            'createdOnString' => $this->showDate ? 'Word Search Created ' . date('r') . '<br>' : '',
+            'showDate'        => $this->showDate,
             'version'         => $version,
         ];
 
