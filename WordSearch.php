@@ -1,6 +1,10 @@
 <?php
 namespace Jasonmm\WordSearch;
 
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig_Environment;
 
 /**
@@ -214,12 +218,15 @@ class WordSearch {
     }
 
     /**
-     * @param Twig_Environment $twig
-     * @param int              $version
+     * @param Environment $twig
+     * @param int         $version
      *
      * @return string the HTML used to display the word search grid.
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function getHtml(Twig_Environment $twig, $version) {
+    public function getHtml(Environment $twig, $version) {
         $grid = $this->grid;
         $wordList = $this->sortedWordList();
 

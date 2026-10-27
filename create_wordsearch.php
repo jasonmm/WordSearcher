@@ -1,6 +1,8 @@
 <?php
 
 use Jasonmm\WordSearch\WordSearch;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 require_once 'vendor/autoload.php';
 $config = require_once('config.php');
@@ -19,8 +21,8 @@ try {
 }
 
 // Create our Twig object.
-$loader = new Twig_Loader_Filesystem('templates');
-$twig = new Twig_Environment($loader, array());
+$loader = new FilesystemLoader('templates');
+$twig = new Environment($loader, array());
 
 $wordSearchHtml = $ws->getHtml($twig, $config['VERSION_STRING']);
 

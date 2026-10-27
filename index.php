@@ -1,5 +1,7 @@
 <?php
 use Jasonmm\WordSearch\WordSearch;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 
 require_once 'vendor/autoload.php';
 $config = require_once('config.php');
@@ -18,8 +20,8 @@ if( strtolower($_SERVER['REQUEST_METHOD']) === 'post' && isset($_FILES['wordsear
 }
 
 // Create our Twig object.
-$loader = new Twig_Loader_Filesystem('templates');
-$twig = new Twig_Environment($loader, array());
+$loader = new FilesystemLoader('templates');
+$twig = new Environment($loader, array());
 
 // Render the template.
 $params = [

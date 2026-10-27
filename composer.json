@@ -14,9 +14,11 @@
     "preferred-install": "dist"
   },
   "autoload": {
-    "psr-4": {"Jasonmm\\WordSearch\\": ""}
+    "psr-4": {
+      "Jasonmm\\WordSearch\\": ""
+    }
   },
   "require": {
-    "twig/twig": "1.9.*"
+    "twig/twig": "^3.0"
   }
 }
