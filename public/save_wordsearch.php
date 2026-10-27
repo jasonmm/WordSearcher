@@ -1,6 +1,6 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // Get the data that will be saved as the file.
 $data = $_REQUEST['wordsearchobj'];

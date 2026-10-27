@@ -7,8 +7,8 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-require_once 'vendor/autoload.php';
-$config = require_once('config.php');
+require_once __DIR__ . '/../vendor/autoload.php';
+$config = require_once(__DIR__ . '/../config.php');
 
 $page_title = 'Building Word Search...';
 
@@ -34,7 +34,7 @@ try {
 }
 
 // Create our Twig object.
-$loader = new FilesystemLoader('templates');
+$loader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($loader, array());
 
 try {

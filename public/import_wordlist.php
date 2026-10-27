@@ -4,7 +4,7 @@ use Jasonmm\WordSearch\WordList;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-require_once 'vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
  * Validates whether the provided text is comprised only of ASCII letters,
@@ -57,7 +57,7 @@ function isAsciiOneWordPerLine(string $text): bool
 
 
 // Create our Twig object.
-$loader = new FilesystemLoader('templates');
+$loader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($loader, array());
 
 try {

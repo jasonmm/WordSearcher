@@ -6,14 +6,14 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
-require_once 'vendor/autoload.php';
-$config = require_once('config.php');
+require_once __DIR__ . '/../vendor/autoload.php';
+$config = require_once(__DIR__ . '/../config.php');
 
 // Unserialize the word search object.
 $ws = unserialize(base64_decode($_REQUEST['wordsearchobj']));
 
 // Create our Twig object.
-$loader = new FilesystemLoader('templates');
+$loader = new FilesystemLoader(__DIR__ . '/../templates');
 $twig = new Environment($loader, array());
 
 // Get the HTML for the word search.
