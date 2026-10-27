@@ -1,6 +1,9 @@
 <?php
 
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 
 require_once 'vendor/autoload.php';
@@ -17,4 +20,8 @@ $twig = new Environment($loader, array());
 $wordSearchHtml = $ws->getHtml($twig, $config['VERSION_STRING']);
 
 // Output the page.
-echo $twig->render('print-wordsearch.twig', ['wordSearchHtml' => $wordSearchHtml]);
+try {
+    echo $twig->render('print-wordsearch.twig', ['wordSearchHtml' => $wordSearchHtml]);
+} catch (LoaderError|RuntimeError|SyntaxError $e) {
+    die('Render error building printable word search.');
+}
